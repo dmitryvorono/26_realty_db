@@ -2,5 +2,6 @@ import os
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-sqlalchemy_database_url = 'sqlite:///' + os.path.join(basedir, 'realty.db')
+SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'realty.db')
+SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 ads_per_page = 15
