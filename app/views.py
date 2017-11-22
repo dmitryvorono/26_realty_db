@@ -8,7 +8,7 @@ from sqlalchemy import or_
 from flask import render_template
 
 
-@app.route('/<int:page>')
+@app.route('/')
 def ads_list():
     return render_template('ads_list.html', ads=[{
             "settlement": "Череповец",
