@@ -11,6 +11,14 @@ $ pip install -r requirements.txt # alternatively try pip3
 ```
 Remember, it is recommended to use [virtualenv/venv](https://devman.org/encyclopedia/pip/pip_virtualenv/) for better isolation.
 
+Than you must create db and load data:
+
+```bash
+$ python db_create.py
+$ python db_migrate.py
+$ python db_load_ads.py [path_to_your_file_with_advertisement]
+```
+
 Next, run app:
 
 ```bash
