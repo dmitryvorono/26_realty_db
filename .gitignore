@@ -2,3 +2,4 @@ __pycache__/
 ads.json
 realty_db/
 db_repository/
+*.db
