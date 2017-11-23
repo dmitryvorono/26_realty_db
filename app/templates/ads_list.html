@@ -153,12 +153,25 @@
                 <div class="panel-body">
                   <div class="clearfix">
                     <ul class="pagination pull-right">
+                      {% if pagination.has_prev %}
+                      <li><a href="{{ pagination.prev_num }}" role="prev">«</a></li>
+                      {% else %}
                       <li class="disabled"><span>«</span></li>
-                      <li class="active"><span>1 <span class="sr-only">(current)</span></span></li>
-                      <li><a href="?page=2" role="next">2</a></li>
-                      <li><a href="?page=3" role="next">3</a></li>
-                      <li><a href="?page=4" role="next">4</a></li>
-                      <li><a href="?page=2" role="next">»</a></li>
+                      {% endif %}
+                      
+                      {% for p in range(1, pagination.pages + 1) %}
+                        {% if p == pagination.page %}
+                          <li class="active"><span>{{ p }}<span class="sr-only">(current)</span></span></li>
+                        {% else %}
+                          <li><a href="{{ p }}" role="next">{{ p }}</a></li>
+                        {% endif %}
+                      
+                      {% endfor %}
+                      {% if pagination.has_next %}
+                      <li><a href="{{ pagination.next_num }}" role="next">»</a></li>
+                      {% else %}
+                      <li class="disabled"><span>»</span></li>
+                      {% endif %}
                     </ul>
                   </div>
                 </div>
