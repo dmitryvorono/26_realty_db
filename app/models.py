@@ -3,7 +3,7 @@ from app import db
 
 class Advertisement(db.Model):
     __tablename__ = 'advertisement'
-    id = db.Column(db.Integer, primary_key=True)
+    identifier = db.Column(db.Integer, primary_key=True)
     premise_area = db.Column(db.Float)
     rooms_number = db.Column(db.Integer)
     construction_year = db.Column(db.Integer)

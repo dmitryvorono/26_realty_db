@@ -31,7 +31,7 @@
         <div class="col-md-9">
           <div class="row">
             <div class="col-sm-4">
-              <form role="form" class="panel panel-default" method="GET">
+              <form role="form" class="panel panel-default" method="GET" action="/">
                 <div class="panel-body">
                   <p>город / районный центр</p>
                   <div class="form-group">
@@ -154,7 +154,7 @@
                   <div class="clearfix">
                     <ul class="pagination pull-right">
                       {% if pagination.has_prev %}
-                      <li><a href="{{ pagination.prev_num }}" role="prev">«</a></li>
+                      <li><a href="{{ url_for('ads_list', page=pagination.prev_num, **request_args) }}" role="prev">«</a></li>
                       {% else %}
                       <li class="disabled"><span>«</span></li>
                       {% endif %}
@@ -163,12 +163,12 @@
                         {% if p == pagination.page %}
                           <li class="active"><span>{{ p }}<span class="sr-only">(current)</span></span></li>
                         {% else %}
-                          <li><a href="{{ p }}" role="next">{{ p }}</a></li>
+                          <li><a href="{{ url_for('ads_list', page=p, **request_args) }}" role="next">{{ p }}</a></li>
                         {% endif %}
                       
                       {% endfor %}
                       {% if pagination.has_next %}
-                      <li><a href="{{ pagination.next_num }}" role="next">»</a></li>
+                      <li><a href="{{ url_for('ads_list', page=pagination.next_num, **request_args) }}" role="next">»</a></li>
                       {% else %}
                       <li class="disabled"><span>»</span></li>
                       {% endif %}

@@ -17,15 +17,32 @@ def create_parser():
     return parser
 
 
+def create_new_advertisement(properties_list):
+    new_advertisement = models.Advertisement()
+    new_advertisement.identifier = properties_list['id']
+    new_advertisement.premise_area = properties_list['premise_area']
+    new_advertisement.rooms_number = properties_list['rooms_number']
+    new_advertisement.construction_year = properties_list['construction_year']
+    new_advertisement.address = properties_list['address']
+    new_advertisement.has_balcony = properties_list['has_balcony']
+    new_advertisement.living_area = properties_list['living_area']
+    new_advertisement.oblast_district = properties_list['oblast_district']
+    new_advertisement.price = properties_list['price']
+    new_advertisement.description = properties_list['description']
+    new_advertisement.under_construction = properties_list['under_construction']
+    new_advertisement.settlement = properties_list['settlement']
+    return new_advertisement
+
+    
 def load_advertisement_to_db(ads):
     if ads is None:
         return
     for ad in ads:
-        advertisement_query = db.session.query(models.Advertisement).filter(models.Advertisement.id == ad['id'])
+        advertisement_query = db.session.query(models.Advertisement).filter(models.Advertisement.identifier == ad['id'])
         if advertisement_query.count() > 0:
             advertisement_query.update(ad)
         else:
-            new_advertisement = models.Advertisement(**ad)
+            new_advertisement = create_new_advertisement(ad)
             db.session.add(new_advertisement)
     db.session.commit()
 
