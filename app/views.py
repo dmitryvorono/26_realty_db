@@ -7,9 +7,9 @@ from config import ads_per_page
 from config import count_years_new_settlement
 
 
-@app.route('/', methods=['GET', 'POST'], defaults={'page': 1})
-@app.route('/<int:page>', methods=['GET', 'POST'])
-def ads_list(page):
+@app.route('/', methods=['GET', 'POST'])
+def ads_list():
+    page = request.args.get('page', default=1, type=int)
     city = request.args.get('oblast_district', default='', type=str)
     is_new_building_only = request.args.get('new_building',
                                             default=False, type=bool)
@@ -18,6 +18,7 @@ def ads_list(page):
     ads = db.session.query(models.Advertisement)
     ads = ads.filter(models.Advertisement.active == True)
     request_args = {}
+    print(request.query_string)
     if city:
         ads = ads.filter(models.Advertisement.settlement == city)
         request_args['oblast_district'] = city
