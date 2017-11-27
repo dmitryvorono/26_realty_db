@@ -16,6 +16,7 @@ def ads_list(page):
     min_price = request.args.get('min_price', default=0, type=int)
     max_price = request.args.get('max_price', default=0, type=int)
     ads = db.session.query(models.Advertisement)
+    ads = ads.filter(models.Advertisement.active == True)
     request_args = {}
     if city:
         ads = ads.filter(models.Advertisement.settlement == city)

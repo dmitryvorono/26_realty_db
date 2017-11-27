@@ -15,3 +15,4 @@ class Advertisement(db.Model):
     description = db.Column(db.String)
     under_construction = db.Column(db.Boolean)
     settlement = db.Column(db.String)
+    active = db.Column(db.Boolean)

@@ -31,14 +31,20 @@ def create_new_advertisement(properties_list):
     new_advertisement.description = properties_list['description']
     new_advertisement.under_construction = properties_list['under_construction']
     new_advertisement.settlement = properties_list['settlement']
+    new_advertisement.active = True
     return new_advertisement
 
     
-def load_advertisement_to_db(ads):
+def update_advertisement_to_db(ads):
     if ads is None:
         return
+    load_advertisement_to_db(ads)
+    mark_notactive_advertisement(ads)
+
+
+def load_advertisement_to_db(ads):
     for ad in ads:
-        advertisement_query = db.session.query(models.Advertisement).filter(models.Advertisement.identifier == ad['id'])
+        advertisement_query = db.session.query(models.Advertisement).filter(models.Advertisement.identifier == ad['identifier'])
         if advertisement_query.count() > 0:
             advertisement_query.update(ad)
         else:
@@ -47,11 +53,23 @@ def load_advertisement_to_db(ads):
     db.session.commit()
 
 
+def mark_notactive_advertisement(ads):
+    id_ads = [ad['identifier'] for ad in ads]
+    advertisement_query = db.session.query(models.Advertisement)
+    advertisement_query = advertisement_query.filter(models.Advertisement.identifier.notin_(id_ads))
+    advertisement_query = advertisement_query.filter(models.Advertisement.active == True)
+    for advertisement in advertisement_query.all():
+        advertisement.active = False
+    db.session.commit()
+
+
 def main():
     parser = create_parser()
     args = parser.parse_args()
     ads = load_json_data(args.path)
-    load_advertisement_to_db(ads)
+    for ad in ads:
+        ad['identifier'] = ad.pop('id')
+    update_advertisement_to_db(ads)
 
 
 if __name__ == '__main__':
